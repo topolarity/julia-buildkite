@@ -84,8 +84,14 @@ steps:
           buildkite-agent pipeline upload .buildkite/pipelines/main/misc/doctest.yml
           buildkite-agent pipeline upload .buildkite/pipelines/main/misc/pdf_docs/build_pdf_docs.yml
           buildkite-agent pipeline upload .buildkite/pipelines/main/misc/embedding.yml
-          buildkite-agent pipeline upload .buildkite/pipelines/main/misc/trimming.yml
           buildkite-agent pipeline upload .buildkite/pipelines/main/misc/llvmpasses.yml
+
+          if [ -d "./test/trimming" ]; then
+            echo "./test/trimming directory exists. Launching (deprecated) trimming tests"
+            buildkite-agent pipeline upload .buildkite/pipelines/main/misc/trimming.yml
+          else
+            echo "./test/trimming directory does NOT exist. Will not launch trimming test job"
+          fi
           # buildkite-agent pipeline upload .buildkite/pipelines/main/misc/whitespace.yml # Currently runs in GitHub Actions instead of Buildkite
 
           buildkite-agent pipeline upload .buildkite/pipelines/main/misc/sanitizers/asan.yml
